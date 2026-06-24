@@ -117,25 +117,25 @@
 
 ### 🐾 PetCut — AI 사료+보충제 조합 분석기 (미국 펫 시장)
 
-`2025 – 진행 중` · **Solo Developer (Architect · Backend · Frontend)** · [github.com/kaos1025/PetCut](https://github.com/kaos1025/PetCut)
+`2026 – 진행 중` · **Solo Developer (Architect · Backend · Frontend)** · [github.com/kaos1025/PetCut](https://github.com/kaos1025/PetCut)
 
 - **Supabase Edge Function (Deno/TS) 프록시 백엔드**: LLM API 키를 클라이언트에서 완전 제거 + IP/디바이스 레이트리밋 + S8 회로차단기(spend cap) + 카탈로그·캐시 선조회로 LLM 호출 최소화
 - **도메인 차별화**: 단일 제품 스캔이 아닌 "사료+보충제 조합" 분석 — 체중별 독성 역치 (D3, Iron, Ca) + 성분 중복 + 기전 충돌 동시 평가 (직접 경쟁자 0)
 - **전략적 BM 피벗 결정**: L1 시대 (Claude $1.99 IAP 유료 리포트, Android Internal Track versionCode 7 + 321 tests 라이브 검증) → 의도적 deprecate → V1 웹 단독 + Chewy/Amazon Affiliate 무료 BM으로 재정의 (시장 객관 변수 D1~D6 의사결정 기반)
 - **기술 스택**: Flutter (V1.1 앱), Supabase Edge Function (Deno/TS), Supabase Postgres, Gemini Flash, Cloudflare Pages, Playwright E2E
 
-### 🧪 SuppleCut — AI 영양제 스택 분석 모바일 앱 (자매 제품)
+### 🧪 SuppleCut — AI 영양제 스택 분석 모바일 앱
 
-`2025` · **Solo Developer (1인 풀스택)** · [supplecut.com](https://supplecut.com) · Google Play 비공개 베타
+`2026` · **Solo Developer (1인 풀스택)** · [supplecut.com](https://supplecut.com) · [github.com/kaos1025/yak-biseo_mvp](https://github.com/kaos1025/yak-biseo_mvp) · Google Play 정식 출시
 
 - **멀티 LLM 라우팅**: Gemini Flash (무료, 결정적 분석 — OCR·중복·UL 계산) → Claude Sonnet (유료 IAP $1.99, narrative 설명) — "Decisions by Engine, Explanations by AI" 원칙으로 비용/품질 분리
 - **20/20 약사 검수 테스트 케이스 통과** (3~12개 제품 케이스, 7-product GABA 경로 중첩 등 엣지 케이스 포함)
-- **컨셉 → Google Play 비공개 베타까지 1개월** 솔로 개발, Google Play Billing IAP 통합 (실기기 검증)
+- **컨셉 → 1개월 만에 Google Play 비공개 베타, 이후 정식 출시** — Google Play Billing IAP 통합 (실기기 검증)
 - **기술 스택**: Flutter / Dart, Google Gemini API, Anthropic Claude API, Google Play Billing, Cloudflare Pages
 
 ### 🛒 Jullyssy Mall — 여성 패션 자사몰 (클라이언트 프로젝트)
 
-`2025 – 진행 중` · **Solo Developer (1인 풀스택)** · [jullyssy.shop](https://jullyssy.shop) (라이브 운영, PG 심사 진행 중)
+`2026 – 진행 중` · **Solo Developer (1인 풀스택)** · [jullyssy.shop](https://jullyssy.shop) (라이브 운영, PG 심사 진행 중)
 
 - **컨셉 → 라이브 배포까지 약 1개월** 솔로 개발 — 네이버 스마트스토어를 독립 자사몰로 전환하는 실제 클라이언트 프로젝트. 네이버 Commerce API로 기존 상품 배치 임포트.
 - **결제·주문 안정성**: TossPayments 통합 (카드·계좌이체·카카오페이·네이버페이) + raw response JSONB 보관(분쟁 대비), 재고 차감 RPC + Order Snapshot 패턴으로 동시성·주문 정확성 보장
@@ -146,7 +146,7 @@
 
 ### 📈 KronosStock — AAAI 2026 Kronos-mini 모델 기반 한국주식 예측 + dry-run 자동화
 
-**Solo Developer (Backend + ML Integration)** · [github.com/kaos1025/KronosStock](https://github.com/kaos1025/KronosStock)
+`2026` · **Solo Developer (Backend + ML Integration)** · [github.com/kaos1025/KronosStock](https://github.com/kaos1025/KronosStock)
 
 - **ML 논문 모델의 프로덕션 통합**: AAAI 2026 Kronos-mini를 직접 vendoring(`inference/vendor_kronos.sh`)하여 KOSPI/KOSDAQ 일봉 가격 예측 파이프라인에 통합. HuggingFace Hub 가중치 캐시 영속화, KronosForecaster 프로세스당 1회 로드(싱글톤, CPU 성능), 모델↔토크나이저 매핑 고정. 개인용·비수익 학습/실험 도구.
 - **백엔드 + 안전한 자동화 설계**: FastAPI 대시보드 + Redis OHLCV 버퍼링 + APScheduler 4-cron job (08:50 / 09:30 / 12:00 / 15:20 KST, `exchange-calendars` XKRX 휴장일 자동 반영). Forecast → Signal → Paper Order → Digest 전체 흐름을 dry-run 기본 모드로 운영 — 실제 broker 주문 API 호출 차단, paper portfolio snapshot만 갱신.
@@ -156,7 +156,7 @@
 ### 🧩 그 외 프로젝트
 
 - **📨 Slack Webhook Hub** ([github.com/kaos1025/slack-webhook-hub](https://github.com/kaos1025/slack-webhook-hub)) — 채널 기반 라우팅 + 스왑형 실행 백엔드(routine/noop/worker)를 갖춘 Slack 명령 허브. Slack 재시도에 안전한 멱등 `command_jobs` 작업 큐(Supabase/PostgREST) + 워커가 워크트리 격리·아티팩트 기록으로 에이전트 작업을 실행. Next.js / TypeScript.
-- **🍕 Pizza of Legend Express** — 영종도 호텔 5곳 외국인 투숙객 대상 **실제 B2B 납품** QR 주문 PWA. 무가입·무설치 QR 주문, 다국어(EN/中文/日本語), Supabase Realtime 주문 관제 + 텔레그램/푸시 알림(점주 Admin UI에서 직접 설정). Next.js 14 / next-intl / Supabase.
+- **🍕 Pizza of Legend Express** ([github.com/kaos1025/Pizza-of-Legend-Express](https://github.com/kaos1025/Pizza-of-Legend-Express)) — 영종도 호텔 5곳 외국인 투숙객 대상 **실제 B2B 납품** QR 주문 PWA. 무가입·무설치 QR 주문, 다국어(EN/中文/日本語), Supabase Realtime 주문 관제 + 텔레그램/푸시 알림(점주 Admin UI에서 직접 설정). Next.js 14 / next-intl / Supabase.
 
 ---
 
@@ -169,7 +169,7 @@
 | ESM+ 아키텍처 개편 | 개발생산성 추정 30%↑, QA 추정 25% 단축, 1억 건 무중단 마이그레이션 | Java, Spring Boot, Kafka, MSSQL |
 | 상품 2.0 | 지마켓·옥션 DB 통합, 외부 개발자 8명 리딩 | C#.NET, MSSQL |
 | **PetCut** (Indie) | Edge Function 프록시 + S8 회로차단기 + 카탈로그 캐시, 사료+보충제 조합 분석 | Flutter, Supabase Edge Function, Gemini |
-| **SuppleCut** (Indie) | 멀티 LLM 라우팅, Google Play 베타, IAP $1.99 검증, 약사 검수 20/20 | Flutter, Gemini, Claude, Play Billing |
+| **SuppleCut** (Indie) | 멀티 LLM 라우팅, Google Play 정식 출시, IAP $1.99 검증, 약사 검수 20/20 | Flutter, Gemini, Claude, Play Billing |
 | **Jullyssy Mall** (Indie) | 약 1개월 솔로 풀스택, TossPayments + SEO 자동화 Edge Function, 53 마이그레이션, 라이브 운영 | Next.js 14, Supabase, TossPayments, Sentry |
 | **KronosStock** (Indie) | AAAI 2026 ML 모델 vendoring + dry-run 자동화, Redis/APScheduler/VPS CI/CD | Python, FastAPI, PyTorch, Redis, GitHub Actions |
 | **Slack Webhook Hub** (Indie) | 채널 라우팅 + 멱등 작업 큐 + 스왑형 실행 백엔드(worker) | Next.js, TypeScript, Supabase/PostgREST |
