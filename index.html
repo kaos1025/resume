@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ji Jungmin · Senior Backend Engineer</title>
+<meta name="description" content="지정민 Ji Jungmin — Senior Backend Engineer. 18년 대규모 커머스 백엔드 + AI/풀스택 인디 프로덕트." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<!-- marked.js for client-side Markdown rendering -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<style>
+  :root {
+    --navy:        #14233f;
+    --navy-2:      #1f3a63;
+    --ink:         #1a2233;
+    --slate:       #586074;
+    --line:        #dce3ee;
+    --paper:       #ffffff;
+    --bg:          #eef1f6;
+    --accent:      #2f6df0;
+    --accent-soft: #eaf1ff;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: "IBM Plex Sans KR", "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Top control bar ───────────────────────────── */
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--navy);
+    color: #fff;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .bar-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 11px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .bar-id {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: #9db4dd;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+  }
+  .bar-id .dot { color: #4ade80; }
+  .bar-id .path { color: #c9d6ee; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-actions { display: flex; gap: 8px; flex-shrink: 0; }
+  .btn {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.04);
+    color: #dce6f7;
+    padding: 6px 13px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s, color .15s;
+    white-space: nowrap;
+  }
+  .btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+  .btn.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .seg { display: flex; border: 1px solid rgba(255,255,255,0.18); border-radius: 7px; overflow: hidden; }
+  .seg .btn { border: none; border-radius: 0; }
+  .seg .btn + .btn { border-left: 1px solid rgba(255,255,255,0.14); }
+
+  /* ── Sheet ─────────────────────────────────────── */
+  .wrap { max-width: 860px; margin: 0 auto; padding: 30px 20px 80px; }
+  .sheet {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 56px 60px 60px;
+    box-shadow: 0 1px 2px rgba(20,35,63,0.04), 0 12px 40px rgba(20,35,63,0.07);
+  }
+
+  /* ── Markdown typography ───────────────────────── */
+  .md > :first-child { margin-top: 0; }
+
+  .md h1 {
+    font-size: 33px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.015em;
+    margin: 0 0 4px;
+    line-height: 1.15;
+  }
+  /* line right after h1 = role line (bold para) */
+  .md h1 + p {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.01em;
+    margin: 0 0 14px;
+  }
+  .md h1 + p strong { font-weight: 500; color: var(--accent); }
+  /* contact line */
+  .md h1 + p + p {
+    font-size: 13.5px;
+    color: var(--slate);
+    margin: 0 0 6px;
+    line-height: 1.9;
+  }
+
+  .md h2 {
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--navy-2);
+    margin: 40px 0 16px;
+    padding-bottom: 9px;
+    border-bottom: 2px solid var(--navy);
+    position: relative;
+  }
+  .md h2::before {
+    content: "▍";
+    color: var(--accent);
+    margin-right: 7px;
+  }
+
+  .md h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 30px 0 3px;
+    letter-spacing: -0.01em;
+  }
+  .md h4 {
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--navy-2);
+    margin: 20px 0 4px;
+  }
+
+  .md p { margin: 6px 0 10px; }
+
+  /* role/date meta line: a para that begins with inline code */
+  .md p > code:first-child {
+    background: none;
+    padding: 0;
+    color: var(--slate);
+    font-weight: 500;
+  }
+
+  .md a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .15s; }
+  .md a:hover { border-bottom-color: var(--accent); }
+
+  .md strong { color: var(--ink); font-weight: 600; }
+
+  .md code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--accent-soft);
+    color: var(--navy-2);
+    padding: 2px 6px;
+    border-radius: 5px;
+  }
+
+  .md ul { margin: 8px 0 14px; padding-left: 0; list-style: none; }
+  .md li {
+    position: relative;
+    padding-left: 20px;
+    margin: 7px 0;
+    color: #2c3548;
+  }
+  .md li::before {
+    content: "▸";
+    position: absolute;
+    left: 2px;
+    top: 0;
+    color: var(--accent);
+    font-size: 0.9em;
+  }
+
+  /* blockquote = summary callout */
+  .md blockquote {
+    margin: 14px 0 18px;
+    padding: 14px 20px;
+    background: linear-gradient(180deg, #f6f9ff, #f0f5fe);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    color: var(--navy-2);
+    font-size: 15px;
+  }
+  .md blockquote p { margin: 0; }
+
+  /* tables */
+  .md table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 20px;
+    font-size: 13.5px;
+  }
+  .md th {
+    text-align: left;
+    background: var(--navy);
+    color: #fff;
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 9px 13px;
+  }
+  .md th:first-child { border-top-left-radius: 8px; }
+  .md th:last-child { border-top-right-radius: 8px; }
+  .md td {
+    padding: 9px 13px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+    color: #38425a;
+  }
+  .md tbody tr:nth-child(even) { background: #f7f9fd; }
+  .md td strong { color: var(--navy-2); }
+
+  .md hr {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 26px 0;
+  }
+
+  /* ── states ────────────────────────────────────── */
+  .lang-pane { display: none; }
+  .lang-pane.active { display: block; }
+
+  #loading {
+    text-align: center;
+    padding: 60px 0;
+    font-family: var(--mono);
+    color: var(--slate);
+    font-size: 13px;
+  }
+
+  footer {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px 50px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #94a0b8;
+  }
+  footer a { color: #94a0b8; }
+
+  /* ── responsive ────────────────────────────────── */
+  @media (max-width: 640px) {
+    .sheet { padding: 32px 22px 40px; border-radius: 10px; }
+    .wrap { padding: 16px 10px 50px; }
+    .md h1 { font-size: 26px; }
+    .bar-inner { padding: 10px 16px; }
+    .bar-id .path { display: none; }
+    .md table { font-size: 12px; }
+    .md td, .md th { padding: 7px 9px; }
+  }
+
+  /* ── print = clean PDF ─────────────────────────── */
+  @media print {
+    @page { size: A4; margin: 14mm 14mm; }
+    body { background: #fff; font-size: 10.5pt; line-height: 1.5; }
+    .bar, footer { display: none !important; }
+    .wrap { max-width: none; padding: 0; }
+    .sheet { border: none; box-shadow: none; border-radius: 0; padding: 0; }
+    .md h2 { margin-top: 18px; }
+    .md h3 { margin-top: 14px; }
+    .md blockquote { background: #f4f7fd !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .md th { background: var(--navy) !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .md tbody tr:nth-child(even) { background: #f7f9fd !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .md a { color: var(--ink); border: none; }
+    h3, h4 { break-after: avoid; }
+    li, tr { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar-inner">
+    <div class="bar-id">
+      <span class="dot">●</span>
+      <span class="path">kaos1025/resume</span>
+    </div>
+    <div class="bar-actions">
+      <div class="seg" role="group" aria-label="언어 선택">
+        <button class="btn on" id="btn-ko" onclick="setLang('ko')">KO</button>
+        <button class="btn" id="btn-en" onclick="setLang('en')">EN</button>
+      </div>
+      <button class="btn" onclick="window.print()" title="PDF로 저장 / 인쇄">⤓ PDF</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="sheet">
+    <div id="loading">loading resume…</div>
+    <div id="pane-ko" class="md lang-pane"></div>
+    <div id="pane-en" class="md lang-pane"></div>
+  </div>
+</div>
+
+<footer>
+  <span id="foot-text">소스 · <a href="https://github.com/kaos1025/resume">github.com/kaos1025/resume</a> · Markdown으로 작성, 이 페이지에서 렌더링</span>
+</footer>
+
+<script>
+  const FILES = { ko: 'resume.ko.md', en: 'resume.en.md' };
+  let loaded = { ko: false, en: false };
+
+  marked.setOptions({ gfm: true, breaks: false });
+
+  async function loadLang(lang) {
+    if (loaded[lang]) return true;
+    try {
+      const res = await fetch(FILES[lang], { cache: 'no-cache' });
+      if (!res.ok) throw new Error(res.status);
+      const md = await res.text();
+      document.getElementById('pane-' + lang).innerHTML = marked.parse(md);
+      loaded[lang] = true;
+      return true;
+    } catch (e) {
+      document.getElementById('pane-' + lang).innerHTML =
+        '<p style="color:#b4232a;font-family:var(--mono)">resume.' + lang +
+        '.md 를 불러오지 못했습니다. 로컬에서 열었다면 GitHub Pages URL로 접속해 주세요.</p>';
+      loaded[lang] = true;
+      return false;
+    }
+  }
+
+  async function setLang(lang) {
+    document.getElementById('loading').style.display = 'none';
+    await loadLang(lang);
+    document.querySelectorAll('.lang-pane').forEach(p => p.classList.remove('active'));
+    document.getElementById('pane-' + lang).classList.add('active');
+    document.getElementById('btn-ko').classList.toggle('on', lang === 'ko');
+    document.getElementById('btn-en').classList.toggle('on', lang === 'en');
+    document.documentElement.lang = lang;
+    document.getElementById('foot-text').innerHTML = (lang === 'ko')
+      ? '소스 · <a href="https://github.com/kaos1025/resume">github.com/kaos1025/resume</a> · Markdown으로 작성, 이 페이지에서 렌더링'
+      : 'Source · <a href="https://github.com/kaos1025/resume">github.com/kaos1025/resume</a> · written in Markdown, rendered here';
+    try { localStorage.setItem('resume-lang', lang); } catch (e) {}
+  }
+
+  (function init() {
+    let lang = 'ko';
+    try { lang = localStorage.getItem('resume-lang') || 'ko'; } catch (e) {}
+    setLang(lang);
+  })();
+</script>
+</body>
+</html>
