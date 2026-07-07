@@ -1,6 +1,6 @@
 # Ji Jungmin
 
-**Senior Backend Engineer**
+**Senior Backend Engineer | Java/Spring · 18 yrs in Large-Scale Commerce · MSA · Kafka · Sharding · 3 yrs Team Lead · Ships AI Full-Stack Products**
 
 ✉️ kaos1025@gmail.com · 🔗 [github.com/kaos1025](https://github.com/kaos1025)
 
@@ -40,7 +40,7 @@
 
 **Item Engineering Team Lead** · Sep 2011 – Nov 2024 *(13 yrs 3 mos)*
 
-> Led the core domain team owning the entire Gmarket/Auction product registration, edit, and query platform. Team of up to 19. Left via a voluntary retirement program prompted by changing business conditions.
+> Led the core domain team owning the entire Gmarket/Auction product registration, edit, and query platform. Team of up to 19.
 
 #### 📦 Product Description MongoDB Migration & MSA Transition
 
@@ -157,7 +157,7 @@
 
 `2026` · **Solo Developer (full-stack)** · [github.com/kaos1025/Pizza-of-Legend-Express](https://github.com/kaos1025/Pizza-of-Legend-Express) · **In real B2B operation**
 
-- **Delivered to 5 hotels in Yeongjong, Korea, serving foreign guests**: a no-sign-up, no-install QR-scan ordering PWA — operating on real users and real orders
+- **Delivered to and operated by a real business client**: a QR-ordering system for a business serving foreign guests at 5 hotels in Yeongjong, Korea — no-sign-up, no-install QR-scan PWA, running on real users and real orders
 - **Multilingual ordering + real-time operations**: EN / 中文 / 日本語 (next-intl), Supabase Realtime order monitoring + Telegram/push notifications (configurable from the owner's admin UI)
 - **Stack**: Next.js 14, next-intl, Supabase (Realtime + Postgres), PWA
 

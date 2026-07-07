@@ -1,6 +1,6 @@
 # 지정민 Ji Jungmin
 
-**시니어 백엔드 엔지니어 · Senior Backend Engineer**
+**시니어 백엔드 엔지니어 | Java/Spring 대용량 커머스 백엔드 18년 · MSA·Kafka·샤딩 · 팀 리딩 3년 · AI 풀스택 제품 출시**
 
 ✉️ kaos1025@gmail.com · 🔗 [github.com/kaos1025](https://github.com/kaos1025)
 
@@ -40,7 +40,7 @@
 
 **Item Engineering팀 팀장** · 2011.09 – 2024.11 *(13년 3개월)*
 
-> 지마켓·옥션 상품 등록/수정/조회 플랫폼 전체를 담당하는 핵심 도메인 팀 리딩. 팀 최대 19명. 회사 사정 변화에 따라 희망퇴직 프로그램으로 퇴사.
+> 지마켓·옥션 상품 등록/수정/조회 플랫폼 전체를 담당하는 핵심 도메인 팀 리딩. 팀 최대 19명.
 
 #### 📦 상품 상세설명 MongoDB 이관 및 MSA 전환
 
@@ -157,7 +157,7 @@
 
 `2026` · **Solo Developer (1인 풀스택)** · [github.com/kaos1025/Pizza-of-Legend-Express](https://github.com/kaos1025/Pizza-of-Legend-Express) · **실제 B2B 납품 운영**
 
-- **영종도 호텔 5곳 외국인 투숙객 대상 실납품**: 무가입·무설치 QR 스캔 주문 PWA — 실사용자·실주문 기반 운영
+- **실제 업체 납품·운영 중**: 영종도 호텔 5곳의 외국인 투숙객을 고객으로 하는 업체에 QR 주문 시스템 납품 — 무가입·무설치 QR 스캔 주문 PWA, 실사용자·실주문 기반 운영
 - **다국어 주문 경험 + 실시간 관제**: EN/中文/日本語 지원 (next-intl), Supabase Realtime 주문 관제 + 텔레그램/푸시 알림 (점주 Admin UI에서 직접 설정)
 - **기술 스택**: Next.js 14, next-intl, Supabase (Realtime + Postgres), PWA
 
