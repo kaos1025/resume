@@ -13,7 +13,7 @@
 - 옥션/지마켓 **16년**, Item Engineering팀 **팀장 3년** (최대 19명 리딩)
 - **3억 건 · 수천 TPS** 규모 상품 플랫폼 아키텍처 설계·구축·운영 전 주기 경험
 - 레거시 현대화 (MSA 전환, MySQL Sharding, MSSQL→MongoDB 이관) 및 무중단 대규모 마이그레이션 전문
-- **AI · 풀스택 · 백엔드 자동화 인디 프로덕트 6종 운영**: 펫(PetCut)·휴먼(SuppleCut) AI 영양제 분석, 라이브 커머스(jullyssy.shop), 주식 예측 자동화(KronosStock), Slack 작업 큐 허브, B2B 호텔 주문 PWA(Pizza of Legend)
+- **AI·풀스택 인디 프로덕트 직접 설계·출시·운영** — Google Play 정식 출시 앱(SuppleCut), 라이브 커머스 자사몰(jullyssy.shop), B2B 호텔 QR 주문 PWA(Pizza of Legend) 포함
 
 ---
 
@@ -25,9 +25,9 @@
 | **Frontend / Mobile** | Next.js 14 (App Router), Flutter / Dart |
 | **DB / Storage** | MySQL (Sharding), MSSQL, MongoDB (WiredTiger), PostgreSQL, Redis, Supabase |
 | **Messaging / Pipeline** | Apache Kafka, Apache Spark (Streaming), APScheduler |
-| **Infra / Ops** | Kubernetes (Private Cloud), Docker Compose, Vercel, Cloudflare Pages, Supabase Edge Function (Deno/TS), GitHub Actions (CI/CD), Hetzner VPS, Grafana, Prometheus, DataDog |
+| **Infra / Ops** | Kubernetes (Private Cloud), Prometheus, Grafana, DataDog ｜ GitHub Actions (CI/CD), Docker, Vercel, Cloudflare Pages, Supabase Edge Functions |
 | **Middleware** | Apache ShardingSphere-JDBC |
-| **AI / ML / LLM 통합** | Google Gemini API, Anthropic Claude API, 비용 티어 기반 멀티 모델 라우팅, 회로차단기·캐시 패턴, PyTorch CPU 추론 (Kronos-mini vendoring), AI 보조 개발 (Claude Code) |
+| **AI / ML / LLM 통합** | Gemini · Claude API 통합, 비용 티어 기반 멀티 모델 라우팅, LLM 비용 통제 패턴 (캐시·레이트리밋·지출 상한 서킷브레이커), AI 보조 개발 (Claude Code) |
 | **Payments** | TossPayments, Google Play Billing (IAP) |
 | **협업 / 테스트** | Git, Jira, Postman, Playwright (E2E) |
 | **Architecture** | MSA, CQRS, Event-Driven, Saga Pattern, DDD, BFF/Proxy, 멱등 작업 큐(Idempotent Job Queue) |
@@ -119,10 +119,10 @@
 
 `2026 – 진행 중` · **Solo Developer (Architect · Backend · Frontend)** · [github.com/kaos1025/PetCut](https://github.com/kaos1025/PetCut)
 
-- **Supabase Edge Function (Deno/TS) 프록시 백엔드**: LLM API 키를 클라이언트에서 완전 제거 + IP/디바이스 레이트리밋 + S8 회로차단기(spend cap) + 카탈로그·캐시 선조회로 LLM 호출 최소화
-- **도메인 차별화**: 단일 제품 스캔이 아닌 "사료+보충제 조합" 분석 — 체중별 독성 역치 (D3, Iron, Ca) + 성분 중복 + 기전 충돌 동시 평가 (직접 경쟁자 0)
-- **전략적 BM 피벗 결정**: L1 시대 (Claude $1.99 IAP 유료 리포트, Android Internal Track versionCode 7 + 321 tests 라이브 검증) → 의도적 deprecate → V1 웹 단독 + Chewy/Amazon Affiliate 무료 BM으로 재정의 (시장 객관 변수 D1~D6 의사결정 기반)
-- **기술 스택**: Flutter (V1.1 앱), Supabase Edge Function (Deno/TS), Supabase Postgres, Gemini Flash, Cloudflare Pages, Playwright E2E
+- **조합 분석 엔진 설계**: 단일 제품 스캔이 아닌 "사료+보충제 조합" 분석 — 체중별 독성 역치(D3·Iron·Ca)·성분 중복·기전 충돌 동시 평가로 단일 스캔 서비스와 차별화
+- **LLM 비용 통제 백엔드**: Supabase Edge Function (Deno/TS) 프록시로 API 키 서버 격리 + IP/디바이스 레이트리밋 + 지출 상한 서킷브레이커 + 카탈로그 캐시 선조회로 호출 비용 최소화
+- **BM 피벗 의사결정**: 유료 IAP 리포트($1.99)를 Android 내부 트랙에서 실검증한 뒤, 시장 데이터 기반으로 웹 단독 + Chewy/Amazon Affiliate 무료 모델로 전환 — 제품 전략 의사결정까지 솔로 수행
+- **기술 스택**: Flutter, Supabase Edge Function (Deno/TS), Supabase Postgres, Gemini Flash, Cloudflare Pages, Playwright E2E
 
 ### 🧪 SuppleCut — AI 영양제 스택 분석 모바일 앱
 
@@ -148,32 +148,22 @@
 
 `2026` · **Solo Developer (Backend + ML Integration)** · [github.com/kaos1025/KronosStock](https://github.com/kaos1025/KronosStock)
 
-- **ML 논문 모델의 프로덕션 통합**: AAAI 2026 Kronos-mini를 직접 vendoring(`inference/vendor_kronos.sh`)하여 KOSPI/KOSDAQ 일봉 가격 예측 파이프라인에 통합. HuggingFace Hub 가중치 캐시 영속화, KronosForecaster 프로세스당 1회 로드(싱글톤, CPU 성능), 모델↔토크나이저 매핑 고정. 개인용·비수익 학습/실험 도구.
-- **백엔드 + 안전한 자동화 설계**: FastAPI 대시보드 + Redis OHLCV 버퍼링 + APScheduler 4-cron job (08:50 / 09:30 / 12:00 / 15:20 KST, `exchange-calendars` XKRX 휴장일 자동 반영). Forecast → Signal → Paper Order → Digest 전체 흐름을 dry-run 기본 모드로 운영 — 실제 broker 주문 API 호출 차단, paper portfolio snapshot만 갱신.
-- **외부 API 운영 + 테스트 / CI/CD**: 한국투자증권 Open API (python-kis) + FinanceDataReader + pykrx 3-tier 데이터 fallback, 레이트리밋(실전 20 req/s · 모의 5 req/s) 의식 + 24h 토큰 디스크 캐시. 모델 stub + fakeredis로 네트워크 없이 단위 테스트, GitHub Actions `deploy-vps.yml`로 Hetzner CX22 VPS 자동 배포.
-- **기술 스택**: Python 3.11, FastAPI, Redis, APScheduler, PyTorch CPU, python-telegram-bot, python-kis, exchange-calendars(XKRX), Docker Compose, GitHub Actions, Hetzner VPS
+- **ML 논문 모델의 프로덕션 통합**: AAAI 2026 Kronos-mini를 직접 vendoring하여 KOSPI/KOSDAQ 일봉 예측 파이프라인에 통합 — CPU 추론, 프로세스당 1회 싱글톤 로드로 리소스 최적화
+- **안전장치 우선 자동화 설계**: FastAPI + Redis + APScheduler 기반 Forecast → Signal → Paper Order → Digest 자동화를 **dry-run 기본 모드**로 운영 — 실제 broker 주문 API 호출 원천 차단
+- **외부 API 운영 + 테스트/CI-CD**: 증권 API 포함 3-tier 데이터 fallback + 레이트리밋 대응, 모델 stub + fakeredis로 네트워크 무의존 단위 테스트, GitHub Actions → VPS 자동 배포
+- **기술 스택**: Python 3.11, FastAPI, Redis, APScheduler, PyTorch CPU, Docker Compose, GitHub Actions
+
+### 🍕 Pizza of Legend Express — B2B 호텔 QR 주문 PWA
+
+`2026` · **Solo Developer (1인 풀스택)** · [github.com/kaos1025/Pizza-of-Legend-Express](https://github.com/kaos1025/Pizza-of-Legend-Express) · **실제 B2B 납품 운영**
+
+- **영종도 호텔 5곳 외국인 투숙객 대상 실납품**: 무가입·무설치 QR 스캔 주문 PWA — 실사용자·실주문 기반 운영
+- **다국어 주문 경험 + 실시간 관제**: EN/中文/日本語 지원 (next-intl), Supabase Realtime 주문 관제 + 텔레그램/푸시 알림 (점주 Admin UI에서 직접 설정)
+- **기술 스택**: Next.js 14, next-intl, Supabase (Realtime + Postgres), PWA
 
 ### 🧩 그 외 프로젝트
 
-- **📨 Slack Webhook Hub** ([github.com/kaos1025/slack-webhook-hub](https://github.com/kaos1025/slack-webhook-hub)) — 채널 기반 라우팅 + 스왑형 실행 백엔드(routine/noop/worker)를 갖춘 Slack 명령 허브. Slack 재시도에 안전한 멱등 `command_jobs` 작업 큐(Supabase/PostgREST) + 워커가 워크트리 격리·아티팩트 기록으로 에이전트 작업을 실행. Next.js / TypeScript.
-- **🍕 Pizza of Legend Express** ([github.com/kaos1025/Pizza-of-Legend-Express](https://github.com/kaos1025/Pizza-of-Legend-Express)) — 영종도 호텔 5곳 외국인 투숙객 대상 **실제 B2B 납품** QR 주문 PWA. 무가입·무설치 QR 주문, 다국어(EN/中文/日本語), Supabase Realtime 주문 관제 + 텔레그램/푸시 알림(점주 Admin UI에서 직접 설정). Next.js 14 / next-intl / Supabase.
-
----
-
-## Projects 요약
-
-| 프로젝트 | 핵심 성과 | 기술 스택 |
-| --- | --- | --- |
-| MongoDB 이관 & MSA | 스토리지 90% 절감 (13TB→1.33TB), 10억 건 무중단 이관 | Java 21, Spring Boot 3.2, MongoDB |
-| Sharded MySQL 조회 플랫폼 | 8,000 TPS 안정 처리, SPOF 제거, JVM 3s→40ms | MySQL Cluster, ShardingSphere, Kafka, Spark |
-| ESM+ 아키텍처 개편 | 개발생산성 추정 30%↑, QA 추정 25% 단축, 1억 건 무중단 마이그레이션 | Java, Spring Boot, Kafka, MSSQL |
-| 상품 2.0 | 지마켓·옥션 DB 통합, 외부 개발자 8명 리딩 | C#.NET, MSSQL |
-| **PetCut** (Indie) | Edge Function 프록시 + S8 회로차단기 + 카탈로그 캐시, 사료+보충제 조합 분석 | Flutter, Supabase Edge Function, Gemini |
-| **SuppleCut** (Indie) | 멀티 LLM 라우팅, Google Play 정식 출시, IAP $1.99 검증, 약사 검수 20/20 | Flutter, Gemini, Claude, Play Billing |
-| **Jullyssy Mall** (Indie) | 약 1개월 솔로 풀스택, TossPayments + SEO 자동화 Edge Function, 53 마이그레이션, 라이브 운영 | Next.js 14, Supabase, TossPayments, Sentry |
-| **KronosStock** (Indie) | AAAI 2026 ML 모델 vendoring + dry-run 자동화, Redis/APScheduler/VPS CI/CD | Python, FastAPI, PyTorch, Redis, GitHub Actions |
-| **Slack Webhook Hub** (Indie) | 채널 라우팅 + 멱등 작업 큐 + 스왑형 실행 백엔드(worker) | Next.js, TypeScript, Supabase/PostgREST |
-| **Pizza of Legend** (B2B) | 호텔 5곳 납품 QR 주문 PWA, 다국어 + Realtime 관제 + 알림 | Next.js 14, next-intl, Supabase Realtime |
+- **📨 Slack Webhook Hub** ([github.com/kaos1025/slack-webhook-hub](https://github.com/kaos1025/slack-webhook-hub)) — Slack 재시도에 안전한 멱등 작업 큐 + 채널 라우팅 명령 허브. Next.js / TypeScript / Supabase.
 
 ---
 

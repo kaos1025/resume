@@ -13,7 +13,7 @@
 - **16 years** at Auction/Gmarket; **3 years** leading the Item Engineering team (up to 19 engineers)
 - Full-lifecycle architecture, build, and operations of a product platform at **300M+ records · thousands of TPS**
 - Legacy modernization specialist — MSA migration, MySQL sharding, MSSQL→MongoDB migration, and zero-downtime large-scale data migration
-- Operating **6 indie products across AI / full-stack / backend automation**: pet (PetCut) & human (SuppleCut) AI supplement analysis, a live commerce store (jullyssy.shop), stock-prediction automation (KronosStock), a Slack job-queue hub, and a B2B hotel-ordering PWA (Pizza of Legend)
+- **Personally designs, ships, and operates AI/full-stack indie products** — including a released Google Play app (SuppleCut), a live D2C commerce store (jullyssy.shop), and a B2B hotel QR-ordering PWA (Pizza of Legend)
 
 ---
 
@@ -25,9 +25,9 @@
 | **Frontend / Mobile** | Next.js 14 (App Router), Flutter / Dart |
 | **DB / Storage** | MySQL (Sharding), MSSQL, MongoDB (WiredTiger), PostgreSQL, Redis, Supabase |
 | **Messaging / Pipeline** | Apache Kafka, Apache Spark (Streaming), APScheduler |
-| **Infra / Ops** | Kubernetes (Private Cloud), Docker Compose, Vercel, Cloudflare Pages, Supabase Edge Functions (Deno/TS), GitHub Actions (CI/CD), Hetzner VPS, Grafana, Prometheus, DataDog |
+| **Infra / Ops** | Kubernetes (Private Cloud), Prometheus, Grafana, DataDog ｜ GitHub Actions (CI/CD), Docker, Vercel, Cloudflare Pages, Supabase Edge Functions |
 | **Middleware** | Apache ShardingSphere-JDBC |
-| **AI / ML / LLM** | Google Gemini API, Anthropic Claude API, cost-tiered multi-model routing, circuit-breaker & caching patterns, PyTorch CPU inference (Kronos-mini vendoring), AI-assisted development (Claude Code) |
+| **AI / ML / LLM** | Gemini & Claude API integration, cost-tiered multi-model routing, LLM cost-control patterns (caching, rate limiting, spend-cap circuit breaker), AI-assisted development (Claude Code) |
 | **Payments** | TossPayments, Google Play Billing (IAP) |
 | **Collaboration / Testing** | Git, Jira, Postman, Playwright (E2E) |
 | **Architecture** | MSA, CQRS, Event-Driven, Saga Pattern, DDD, BFF/Proxy, Idempotent Job Queue |
@@ -119,10 +119,10 @@
 
 `2026 – ongoing` · **Solo Developer (Architect · Backend · Frontend)** · [github.com/kaos1025/PetCut](https://github.com/kaos1025/PetCut)
 
-- **Supabase Edge Function (Deno/TS) proxy backend**: fully removes LLM API keys from the client + IP/device rate limiting + an "S8" circuit breaker (spend cap) + catalog/cache pre-lookup to minimize LLM calls
-- **Domain differentiation**: not single-product scanning but "food + supplement combo" analysis — simultaneous evaluation of weight-based toxicity thresholds (D3, Iron, Ca), ingredient overlap, and mechanism conflicts (zero direct competitors)
-- **Strategic BM pivot**: the L1 era (Claude $1.99 IAP paid report; live-validated on the Android Internal Track at versionCode 7 with 321 tests) was intentionally deprecated → redefined V1 as web-only with a free Chewy/Amazon affiliate model (decided from objective market variables D1–D6)
-- **Stack**: Flutter (V1.1 app), Supabase Edge Functions (Deno/TS), Supabase Postgres, Gemini Flash, Cloudflare Pages, Playwright E2E
+- **Combo-analysis engine design**: not single-product scanning but "food + supplement combo" analysis — simultaneously evaluates weight-based toxicity thresholds (D3, Iron, Ca), ingredient overlap, and mechanism conflicts, differentiating from single-scan services
+- **LLM cost-control backend**: Supabase Edge Function (Deno/TS) proxy isolates API keys server-side + IP/device rate limiting + spend-cap circuit breaker + catalog cache pre-lookup to minimize LLM call cost
+- **BM pivot decision**: live-validated a paid IAP report ($1.99) on the Android internal track, then pivoted to a web-only free model with Chewy/Amazon affiliate based on market data — owning product-strategy decisions solo
+- **Stack**: Flutter, Supabase Edge Functions (Deno/TS), Supabase Postgres, Gemini Flash, Cloudflare Pages, Playwright E2E
 
 ### 🧪 SuppleCut — AI Supplement Stack Analyzer
 
@@ -148,32 +148,22 @@
 
 `2026` · **Solo Developer (Backend + ML Integration)** · [github.com/kaos1025/KronosStock](https://github.com/kaos1025/KronosStock)
 
-- **Productionizing a research model**: vendors AAAI 2026 Kronos-mini directly (`inference/vendor_kronos.sh`) into a KOSPI/KOSDAQ daily price-prediction pipeline. Persistent HuggingFace Hub weight cache, KronosForecaster loaded once per process (singleton, for CPU performance), fixed model↔tokenizer mapping. A personal, non-commercial learning/experimentation tool.
-- **Backend + safe automation design**: FastAPI dashboard + Redis OHLCV buffering + APScheduler 4-cron jobs (08:50 / 09:30 / 12:00 / 15:20 KST, with `exchange-calendars` XKRX holidays auto-applied). Runs the full Forecast → Signal → Paper Order → Digest flow in dry-run mode by default — blocks real broker order-API calls, updating only a paper portfolio snapshot.
-- **External-API ops + testing/CI-CD**: 3-tier data fallback (Korea Investment & Securities Open API via python-kis + FinanceDataReader + pykrx), rate-limit aware (live 20 req/s · mock 5 req/s) + 24h token disk cache. Unit-testable without network via model stubs + fakeredis; auto-deploy to a Hetzner CX22 VPS via GitHub Actions (`deploy-vps.yml`).
-- **Stack**: Python 3.11, FastAPI, Redis, APScheduler, PyTorch CPU, python-telegram-bot, python-kis, exchange-calendars (XKRX), Docker Compose, GitHub Actions, Hetzner VPS
+- **Productionizing a research model**: vendored AAAI 2026 Kronos-mini directly into a KOSPI/KOSDAQ daily price-prediction pipeline — CPU inference with a once-per-process singleton load for resource efficiency
+- **Safety-first automation design**: runs the full Forecast → Signal → Paper Order → Digest flow on FastAPI + Redis + APScheduler in **dry-run mode by default** — real broker order-API calls are blocked at the source
+- **External-API ops + testing/CI-CD**: 3-tier data fallback (incl. a brokerage Open API) with rate-limit handling; network-free unit tests via model stubs + fakeredis; auto-deploy to a VPS via GitHub Actions
+- **Stack**: Python 3.11, FastAPI, Redis, APScheduler, PyTorch CPU, Docker Compose, GitHub Actions
+
+### 🍕 Pizza of Legend Express — B2B Hotel QR-Ordering PWA
+
+`2026` · **Solo Developer (full-stack)** · [github.com/kaos1025/Pizza-of-Legend-Express](https://github.com/kaos1025/Pizza-of-Legend-Express) · **In real B2B operation**
+
+- **Delivered to 5 hotels in Yeongjong, Korea, serving foreign guests**: a no-sign-up, no-install QR-scan ordering PWA — operating on real users and real orders
+- **Multilingual ordering + real-time operations**: EN / 中文 / 日本語 (next-intl), Supabase Realtime order monitoring + Telegram/push notifications (configurable from the owner's admin UI)
+- **Stack**: Next.js 14, next-intl, Supabase (Realtime + Postgres), PWA
 
 ### 🧩 Other Projects
 
-- **📨 Slack Webhook Hub** ([github.com/kaos1025/slack-webhook-hub](https://github.com/kaos1025/slack-webhook-hub)) — a Slack command hub with channel-based routing and a swappable execution backend (routine/noop/worker). A retry-safe idempotent `command_jobs` queue (Supabase/PostgREST) plus a worker that runs agent jobs with worktree isolation and artifact logging. Next.js / TypeScript.
-- **🍕 Pizza of Legend Express** ([github.com/kaos1025/Pizza-of-Legend-Express](https://github.com/kaos1025/Pizza-of-Legend-Express)) — a **real B2B-delivered** QR-ordering PWA for foreign guests at 5 hotels in Yeongjong, Korea. No sign-up, no app install, order via QR scan; multilingual (EN / 中文 / 日本語); Supabase Realtime order operations + Telegram/push notifications (configurable directly from the owner's admin UI). Next.js 14 / next-intl / Supabase.
-
----
-
-## Projects Summary
-
-| Project | Highlights | Stack |
-| --- | --- | --- |
-| MongoDB Migration & MSA | 90% storage cut (13TB→1.33TB), 1B+ records migrated zero-downtime | Java 21, Spring Boot 3.2, MongoDB |
-| Sharded MySQL Query Platform | Stable 8,000 TPS, SPOF removed, JVM 3s→40ms | MySQL Cluster, ShardingSphere, Kafka, Spark |
-| ESM+ Re-architecture | ~30% productivity↑ (est.), ~25% QA-time↓ (est.), 100M records migrated zero-downtime | Java, Spring Boot, Kafka, MSSQL |
-| Product 2.0 | Gmarket/Auction DB unification, led 8 external devs | C#.NET, MSSQL |
-| **PetCut** (Indie) | Edge Function proxy + S8 circuit breaker + catalog cache, food+supplement combo analysis | Flutter, Supabase Edge Function, Gemini |
-| **SuppleCut** (Indie) | Multi-LLM routing, released on Google Play, IAP $1.99 validated, 20/20 pharmacist review | Flutter, Gemini, Claude, Play Billing |
-| **Jullyssy Mall** (Indie) | ~1-month solo full-stack, TossPayments + automated SEO Edge Function, 53 migrations, live | Next.js 14, Supabase, TossPayments, Sentry |
-| **KronosStock** (Indie) | AAAI 2026 ML model vendoring + dry-run automation, Redis/APScheduler/VPS CI-CD | Python, FastAPI, PyTorch, Redis, GitHub Actions |
-| **Slack Webhook Hub** (Indie) | Channel routing + idempotent job queue + swappable execution backend (worker) | Next.js, TypeScript, Supabase/PostgREST |
-| **Pizza of Legend** (B2B) | QR-ordering PWA delivered to 5 hotels, multilingual + Realtime ops + notifications | Next.js 14, next-intl, Supabase Realtime |
+- **📨 Slack Webhook Hub** ([github.com/kaos1025/slack-webhook-hub](https://github.com/kaos1025/slack-webhook-hub)) — a retry-safe idempotent job queue + channel-routing Slack command hub. Next.js / TypeScript / Supabase.
 
 ---
 
