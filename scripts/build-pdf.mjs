@@ -2,7 +2,9 @@
 // headless Chromium — the exact same rendering pipeline as the live web résumé.
 //
 // Usage:  node scripts/build-pdf.mjs
+//         node scripts/build-pdf.mjs --doc <slug>   # applications/resume.<slug>.ko.md 기반 맞춤 버전
 // Output: pdf/Ji_Jungmin_Resume_KO.pdf, pdf/Ji_Jungmin_Resume_EN.pdf
+//         (--doc 사용 시) pdf/Ji_Jungmin_Resume_<slug>.pdf
 //
 // Requires: playwright (chromium). Install with `npm install` then
 // `npx playwright install --with-deps chromium`.
@@ -17,10 +19,22 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const OUT = join(ROOT, 'pdf');
 
-const TARGETS = [
-  { lang: 'ko', file: 'Ji_Jungmin_Resume_KO.pdf' },
-  { lang: 'en', file: 'Ji_Jungmin_Resume_EN.pdf' },
-];
+const docArg = (() => {
+  const i = process.argv.indexOf('--doc');
+  const v = i !== -1 ? process.argv[i + 1] : null;
+  if (v && !/^[a-z0-9-]+$/.test(v)) {
+    console.error(`invalid --doc slug: ${v} (use lowercase letters, digits, hyphens)`);
+    process.exit(1);
+  }
+  return v;
+})();
+
+const TARGETS = docArg
+  ? [{ lang: 'ko', file: `Ji_Jungmin_Resume_${docArg}.pdf`, doc: docArg }]
+  : [
+      { lang: 'ko', file: 'Ji_Jungmin_Resume_KO.pdf' },
+      { lang: 'en', file: 'Ji_Jungmin_Resume_EN.pdf' },
+    ];
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -64,8 +78,8 @@ async function main() {
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
-  for (const { lang, file } of TARGETS) {
-    await page.goto(`${base}/index.html`, { waitUntil: 'networkidle' });
+  for (const { lang, file, doc } of TARGETS) {
+    await page.goto(`${base}/index.html${doc ? `?doc=${doc}` : ''}`, { waitUntil: 'networkidle' });
     // Switch language and wait for the Markdown to finish rendering.
     await page.evaluate((l) => window.setLang(l), lang);
     await page.waitForFunction(

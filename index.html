@@ -330,7 +330,14 @@
 </footer>
 
 <script>
-  const FILES = { ko: 'resume.ko.md', en: 'resume.en.md' };
+  // ?doc=<slug> → applications/resume.<slug>.ko.md 렌더링 (로컬 프리뷰용, applications/는 push 제외)
+  const DOC = (() => {
+    const d = new URLSearchParams(location.search).get('doc');
+    return d && /^[a-z0-9-]+$/.test(d) ? d : null;
+  })();
+  const FILES = DOC
+    ? { ko: 'applications/resume.' + DOC + '.ko.md' }
+    : { ko: 'resume.ko.md', en: 'resume.en.md' };
   let loaded = { ko: false, en: false };
 
   marked.setOptions({ gfm: true, breaks: false });
@@ -346,8 +353,10 @@
       return true;
     } catch (e) {
       document.getElementById('pane-' + lang).innerHTML =
-        '<p style="color:#b4232a;font-family:var(--mono)">resume.' + lang +
-        '.md 를 불러오지 못했습니다. 로컬에서 열었다면 GitHub Pages URL로 접속해 주세요.</p>';
+        '<p style="color:#b4232a;font-family:var(--mono)">' + FILES[lang] +
+        ' 를 불러오지 못했습니다. ' + (DOC
+          ? 'applications/ 에 해당 파일이 있는지, 로컬 서버(예: npx serve)로 열었는지 확인해 주세요.'
+          : '로컬에서 열었다면 GitHub Pages URL로 접속해 주세요.') + '</p>';
       loaded[lang] = true;
       return false;
     }
@@ -364,12 +373,19 @@
     document.getElementById('foot-text').innerHTML = (lang === 'ko')
       ? '소스 · <a href="https://github.com/kaos1025/resume">github.com/kaos1025/resume</a> · Markdown으로 작성, 이 페이지에서 렌더링'
       : 'Source · <a href="https://github.com/kaos1025/resume">github.com/kaos1025/resume</a> · written in Markdown, rendered here';
-    try { localStorage.setItem('resume-lang', lang); } catch (e) {}
+    if (!DOC) { try { localStorage.setItem('resume-lang', lang); } catch (e) {} }
   }
 
   (function init() {
     let lang = 'ko';
-    try { lang = localStorage.getItem('resume-lang') || 'ko'; } catch (e) {}
+    if (DOC) {
+      // 맞춤 버전은 ko 단일 문서 — EN 토글 숨김, 상단 바에 문서명 표시
+      document.getElementById('btn-en').style.display = 'none';
+      document.querySelector('.path').textContent = 'kaos1025/resume · ' + DOC;
+      document.title = 'Ji Jungmin · Resume (' + DOC + ')';
+    } else {
+      try { lang = localStorage.getItem('resume-lang') || 'ko'; } catch (e) {}
+    }
     setLang(lang);
   })();
 </script>

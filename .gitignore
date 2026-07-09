@@ -9,3 +9,9 @@ package-lock.json
 .DS_Store
 Thumbs.db
 *.log
+
+# JD-tailored resumes — local only, never push (전략 메모 포함, 공개 금지)
+applications/
+pdf/Ji_Jungmin_Resume_*
+!pdf/Ji_Jungmin_Resume_KO.pdf
+!pdf/Ji_Jungmin_Resume_EN.pdf
